@@ -1,0 +1,49 @@
+<?php
+
+if(!defined('BASEPATH'))
+    define('BASEPATH',dirname(__FILE__).'..');
+
+if(!defined('DS'))
+    define('DS', DIRECTORY_SEPARATOR);
+
+if(!defined('DIR'))
+    define('DIR', basename(dirname(__FILE__)));
+
+if(!defined('BASEURL'))
+    define('BASEURL', 'http://'. $_SERVER['SERVER_NAME'].'/'.DIR.'/');
+
+
+var_dump(BASEURL);
+/*
+ * Realiza a conexão entre o index.php da aplicação
+ * com o index.php do core do framework
+ */
+include_once(BASEPATH.'/framework/index.php');
+/*
+ * Importa a variável $params que contém alguns parâmetros de configuração
+ * do framework, tais como: Título padrão da página, configuração de Banco de Dados e entre outros.
+ */
+
+$settings = App::import('application.settings.*','.php', true);
+
+/*
+ * Importa as constants que serão utilizadas com a função de 
+ * definir caminhos e rotas de pastas.
+ */
+
+App::import('framework.constants','.php');
+
+/*
+ * Instancia o método que inicializa a aplicação.
+ */
+
+$app = new App();
+
+/*
+ * Passa toda a configuração para o core da class.
+ */
+
+$app->setParams($settings)->run();
+
+
+?>
